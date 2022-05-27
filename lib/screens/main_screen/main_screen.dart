@@ -25,18 +25,36 @@ class MainScreenWidget extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [
-          Banners_List_Wrap(size: size, listBanners: listBanners),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Text('asdasdasd');
-              },
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              titleSpacing: 0,
+              backgroundColor: Colors.white,
+              title: Banners_List_Wrap(size: size, listBanners: listBanners),
+              //expandedHeight: 150,
+              //collapsedHeight: 150,
+              toolbarHeight: size.height * 0.25 + kDefaultPadding,
             ),
-          ),
-        ],
-      )),
+            const SliverAppBar(
+              backgroundColor: Colors.green,
+              title: Text('Have a nice day'),
+              floating: true,
+              pinned: true,
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Container(
+                    height: 20,
+                    color: Colors.red,
+                  );
+                },
+                childCount: 100, // 1000 list items
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

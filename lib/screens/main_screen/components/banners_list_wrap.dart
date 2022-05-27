@@ -13,28 +13,25 @@ class Banners_List_Wrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-      child: Container(
-        height: size.height * 0.20,
-        child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-          itemCount: listBanners.length,
-          scrollDirection: Axis.horizontal,
-          separatorBuilder: (context, index) {
-            return SizedBox(width: 10);
-          },
-          itemBuilder: (context, index) {
-            return Container(
-              height: size.height * 0.20,
-              width: size.width - 40,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: listBanners[index].image,
-              ),
-            );
-          },
-        ),
+    return Container(
+      height: size.height * 0.25,
+      child: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+        itemCount: listBanners.length,
+        scrollDirection: Axis.horizontal,
+        separatorBuilder: (context, index) {
+          return SizedBox(width: 10);
+        },
+        itemBuilder: (context, index) {
+          return Container(
+            height: size.height * 0.25,
+            width: size.width - 40,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: listBanners[index].image,
+            ),
+          );
+        },
       ),
     );
   }

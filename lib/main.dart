@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_app/screens/main_screen/main_screen.dart';
 import 'package:pizza_app/screens/splash_screen/splash_screen.dart';
 
 void main() {
@@ -12,7 +13,8 @@ class PizzaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreenWidget(),
+      //home: SplashScreenWidget(),
+      home: MainScreenWidget(),
     );
   }
 }
