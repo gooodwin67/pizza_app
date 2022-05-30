@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza_app/constants.dart';
 
@@ -36,8 +37,6 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       newOpacity = 0;
     }
     setState(() {});
-
-    print("Extent after: $newOpacity");
   }
 
   @override
@@ -62,13 +61,37 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                 opacity: newOpacity,
                 child: Banners_List_Wrap(size: size, listBanners: listBanners),
               ),
-              //expandedHeight: 150,
-              //collapsedHeight: 150,
-              toolbarHeight: size.height * 0.25 + kDefaultPadding,
+              toolbarHeight: size.height * 0.20 + kDefaultPadding,
             ),
-            const SliverAppBar(
-              backgroundColor: Colors.green,
-              title: Text('Have a nice day'),
+            SliverAppBar(
+              backgroundColor: Colors.white,
+              title: Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(Size(30, 30)),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 0),
+                      ),
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                      side: MaterialStateProperty.all(
+                        const BorderSide(
+                          color: Color.fromARGB(255, 236, 236, 236),
+                        ),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                      ),
+                    ),
+                    child: const Text(
+                      'data',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
               floating: true,
               pinned: true,
             ),

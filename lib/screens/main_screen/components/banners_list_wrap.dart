@@ -14,7 +14,7 @@ class Banners_List_Wrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size.height * 0.25,
+      height: size.height * 0.20,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
         itemCount: listBanners.length,
@@ -24,7 +24,7 @@ class Banners_List_Wrap extends StatelessWidget {
         },
         itemBuilder: (context, index) {
           return Container(
-            height: size.height * 0.25,
+            height: size.height * 0.20,
             width: size.width - 40,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
