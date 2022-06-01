@@ -14,9 +14,12 @@ class Banners_List_Wrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size.height * 0.20,
+      height: size.height * 0.20 + kDefaultPadding,
       child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+        padding: const EdgeInsets.only(
+            left: kDefaultPadding / 2,
+            right: kDefaultPadding / 2,
+            top: kDefaultPadding),
         itemCount: listBanners.length,
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) {
@@ -24,10 +27,10 @@ class Banners_List_Wrap extends StatelessWidget {
         },
         itemBuilder: (context, index) {
           return Container(
-            height: size.height * 0.20,
+            height: size.height * 0.20 + kDefaultPadding,
             width: size.width - 40,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(30),
               child: listBanners[index].image,
             ),
           );
