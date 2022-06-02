@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_app/constants.dart';
 
-class CategoryTabsWidget extends StatelessWidget {
+class CategoryTabsWidget extends StatefulWidget {
   const CategoryTabsWidget(
       {Key? key, required this.size, required this.listCategories})
       : super(key: key);
@@ -10,13 +10,22 @@ class CategoryTabsWidget extends StatelessWidget {
   final List listCategories;
 
   @override
+  State<CategoryTabsWidget> createState() => _CategoryTabsWidgetState();
+}
+
+class _CategoryTabsWidgetState extends State<CategoryTabsWidget> {
+  @override
   Widget build(BuildContext context) {
+    onTapCategory(key) {
+      print(key);
+    }
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
-      height: size.height * 0.05 + kDefaultPadding,
+      height: widget.size.height * 0.05 + kDefaultPadding,
       child: ListView.separated(
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-          itemCount: listCategories.length,
+          itemCount: widget.listCategories.length,
           scrollDirection: Axis.horizontal,
           separatorBuilder: (context, index) {
             return SizedBox(width: 10);
@@ -24,9 +33,13 @@ class CategoryTabsWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             return Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  return onTapCategory(widget.listCategories[index].key);
+                },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
+                  primary: widget.listCategories[index].active
+                      ? kPrimaryColor
+                      : Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -38,7 +51,7 @@ class CategoryTabsWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                child: listCategories[index].text,
+                child: widget.listCategories[index].text,
               ),
             );
           }),

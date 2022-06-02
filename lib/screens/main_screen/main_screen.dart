@@ -13,6 +13,7 @@ class MainScreenWidget extends StatefulWidget {
 class _MainScreenWidgetState extends State<MainScreenWidget> {
   var scrollController = ScrollController();
   double newOpacity = 1;
+  List activeList = [];
   void _onScrollEvent() {
     final extentOpacity;
     extentOpacity = scrollController.position.extentBefore;
@@ -27,12 +28,18 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   void initState() {
     scrollController.addListener(_onScrollEvent);
+    activeList = listProducts[0];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    getDescription(ingridients) {
+      return ingridients.join(', ')[0].toUpperCase() +
+          ingridients.join(', ').substring(1);
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -72,7 +79,8 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                             bottom: kDefaultPadding / 2),
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: Color.fromARGB(255, 206, 206, 206)),
+                                color:
+                                    const Color.fromARGB(255, 206, 206, 206)),
                             borderRadius: BorderRadius.circular(20)),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -83,18 +91,18 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                                 bottom: kDefaultPadding / 2,
                               ),
                               width: 115,
-                              height: 80,
+                              height: 115,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: Image.asset(listProducts[index].image,
-                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(7),
+                                child: Image.asset(activeList[index].image,
+                                    fit: BoxFit.contain),
                               ),
                             ),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: kDefaultPadding / 4,
-                                    vertical: kDefaultPadding / 1),
+                                    horizontal: kDefaultPadding / 3,
+                                    vertical: kDefaultPadding / 1.5),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
@@ -102,12 +110,27 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        listProducts[index].name,
-                                        style: TextStyle(
-                                            fontSize: 25,
+                                        activeList[index].name,
+                                        style: const TextStyle(
+                                            fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text('asd'),
+                                      const SizedBox(height: 3),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          child: Text(
+                                            getDescription(
+                                                activeList[index].ingridients),
+                                            maxLines: 4,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              color: Color(0xFF7C7C7C),
+                                              height: 1.3,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -123,11 +146,11 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                                     bottomRight: Radius.circular(20),
                                   ),
                                 ),
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 13, vertical: 12),
                                 child: Text(
-                                  listProducts[index].price.toString(),
-                                  style: TextStyle(
+                                  activeList[index].price.toString(),
+                                  style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -136,11 +159,11 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                     ],
                   );
                 },
-                childCount: listProducts.length,
+                childCount: activeList.length,
               ),
             ),
           ],
@@ -150,48 +173,128 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   }
 }
 
-List listProducts = <ListProducts>[
-  ListProducts(
-      image: 'assets/images/products/pepperoni.jpg',
-      name: 'Пепперони',
-      ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
-      price: 399.00),
-  ListProducts(
-      image: 'assets/images/products/foursesons.jpg',
-      name: '4 Сезона',
-      ingridients: [
-        'моцарелла',
-        'ветчина',
-        'пикантная пепперони',
-        'брынза',
-        'томаты',
-        'шампиньоны',
-        'итальянские травы',
-        'томатный соус'
-      ],
-      price: 579.00),
-  ListProducts(
-      image: 'assets/images/products/double_pepperoni.jpg',
-      name: 'двойная пепперони',
-      ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
-      price: 639.00),
-  ListProducts(
-      image: 'assets/images/products/gavai.jpg',
-      name: 'Гавайская',
-      ingridients: ['ветчина', 'ананасы', 'моцарелла', 'томатный соус'],
-      price: 579.00),
-  ListProducts(
-      image: 'assets/images/products/myasnaya.jpg',
-      name: 'Мясная',
-      ingridients: [
-        'цыпленок',
-        'ветчина',
-        'пикантная пепперони',
-        'острая чоризо',
-        'моцарелла',
-        'томатный соус'
-      ],
-      price: 429.00),
+List listProducts = [
+  [
+    ListProducts(
+        image: 'assets/images/products/pepperoni.jpg',
+        name: 'Пепперони',
+        ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
+        price: 399.00),
+    ListProducts(
+        image: 'assets/images/products/foursesons.jpg',
+        name: '4 Сезона',
+        ingridients: [
+          'моцарелла',
+          'ветчина',
+          'пикантная пепперони',
+          'брынза',
+          'томаты',
+          'шампиньоны',
+          'итальянские травы',
+          'томатный соус'
+        ],
+        price: 579.00),
+    ListProducts(
+        image: 'assets/images/products/double_pepperoni.jpg',
+        name: 'Двойная пепперони',
+        ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
+        price: 639.00),
+    ListProducts(
+        image: 'assets/images/products/gavai.jpg',
+        name: 'Гавайская',
+        ingridients: ['ветчина', 'ананасы', 'моцарелла', 'томатный соус'],
+        price: 579.00),
+    ListProducts(
+        image: 'assets/images/products/myasnaya.jpg',
+        name: 'Мясная',
+        ingridients: [
+          'цыпленок',
+          'ветчина',
+          'пикантная пепперони',
+          'острая чоризо',
+          'моцарелла',
+          'томатный соус'
+        ],
+        price: 429.00),
+  ],
+  [
+    ListProducts(
+        image: 'assets/images/products/kalif.jpg',
+        name: 'Калифорния',
+        ingridients: [
+          'Икра Масаго',
+          'имитация краба',
+          'сливочный сыр',
+          'огурец',
+          'рис',
+          'нори'
+        ],
+        price: 29.00),
+    ListProducts(
+        image: 'assets/images/products/fil.jpg',
+        name: 'Филадельфия Люкс',
+        ingridients: [
+          'Лосось слабосоленый',
+          'икра масаго',
+          'огурец',
+          'сливочный сыр',
+          'рис',
+          'нори'
+        ],
+        price: 43.00),
+    ListProducts(
+        image: 'assets/images/products/bansay.jpg',
+        name: 'Бансай',
+        ingridients: [
+          'Бекон',
+          'сливочный сыр',
+          'огурец',
+          'кунжут',
+          'рис',
+          'нори'
+        ],
+        price: 29.00),
+    ListProducts(
+        image: 'assets/images/products/alaska.jpg',
+        name: 'Аляска',
+        ingridients: [
+          'Лосось терияки',
+          'сливочный сыр',
+          'огурец',
+          'кунжут',
+          'рис',
+          'нори'
+        ],
+        price: 32.00),
+  ]
+];
+
+List listCategories = <ListCategories>[
+  ListCategories(
+      key: 1000,
+      active: false,
+      text:
+          const Icon(Icons.filter_alt_rounded, color: Colors.black, size: 20)),
+  ListCategories(
+      key: 0,
+      active: true,
+      text: const Text('Pizza', style: const TextStyle(color: Colors.black))),
+  ListCategories(
+      key: 1,
+      active: false,
+      text: const Text('Sushi', style: TextStyle(color: Colors.black))),
+  ListCategories(
+      key: 2,
+      active: false,
+      text: const Text('Solods', style: const TextStyle(color: Colors.black))),
+  ListCategories(
+      key: 3,
+      active: false,
+      text: const Text('Drinks', style: TextStyle(color: Colors.black))),
+  ListCategories(
+      key: 4,
+      active: false,
+      text: const Text('Snacks', style: const TextStyle(color: Colors.black))),
 ];
 
 List listBanners = <ListBanners>[
@@ -201,16 +304,6 @@ List listBanners = <ListBanners>[
       image: Image.asset('assets/images/banner2.jpg', fit: BoxFit.cover)),
   ListBanners(
       image: Image.asset('assets/images/banner3.jpg', fit: BoxFit.cover)),
-];
-
-List listCategories = <ListCategories>[
-  ListCategories(
-      text: Icon(Icons.filter_alt_rounded, color: Colors.black, size: 20)),
-  ListCategories(text: Text('Pizza', style: TextStyle(color: Colors.black))),
-  ListCategories(text: Text('Snacks', style: TextStyle(color: Colors.black))),
-  ListCategories(text: Text('Solods', style: TextStyle(color: Colors.black))),
-  ListCategories(text: Text('Drinks', style: TextStyle(color: Colors.black))),
-  ListCategories(text: Text('Sushi', style: TextStyle(color: Colors.black))),
 ];
 
 class ListProducts {
@@ -233,8 +326,9 @@ class ListProducts {
 
 class ListCategories {
   final text;
-
-  ListCategories({required this.text});
+  final key;
+  final active;
+  ListCategories({required this.key, required this.active, required this.text});
 }
 
 class ListBanners {
