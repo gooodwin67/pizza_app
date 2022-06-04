@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_app/constants.dart';
+import 'package:pizza_app/providers.dart';
 import 'package:pizza_app/screens/main_screen/components/banners_list_wrap.dart';
 import 'package:pizza_app/screens/main_screen/components/category_list_wrap.dart';
+import 'package:provider/provider.dart';
 
 class MainScreenWidget extends StatefulWidget {
   const MainScreenWidget({Key? key}) : super(key: key);
@@ -28,7 +30,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   void initState() {
     scrollController.addListener(_onScrollEvent);
-    activeList = listProducts[0];
+    activeList = listProducts[context.read<Categories>().activeCategory[0]];
     super.initState();
   }
 
@@ -60,7 +62,8 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
               toolbarHeight: size.height * 0.08 + kDefaultPadding,
               backgroundColor: Colors.white,
               title: CategoryTabsWidget(
-                  size: size, listCategories: listCategories),
+                size: size,
+              ),
               floating: true,
               pinned: true,
             ),
@@ -131,6 +134,13 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                                           ),
                                         ),
                                       ),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            print(context
+                                                .read<Categories>()
+                                                .activeCategory[0]);
+                                          },
+                                          child: Text('press'))
                                     ],
                                   ),
                                 ),
@@ -269,34 +279,6 @@ List listProducts = [
   ]
 ];
 
-List listCategories = <ListCategories>[
-  ListCategories(
-      key: 1000,
-      active: false,
-      text:
-          const Icon(Icons.filter_alt_rounded, color: Colors.black, size: 20)),
-  ListCategories(
-      key: 0,
-      active: true,
-      text: const Text('Pizza', style: const TextStyle(color: Colors.black))),
-  ListCategories(
-      key: 1,
-      active: false,
-      text: const Text('Sushi', style: TextStyle(color: Colors.black))),
-  ListCategories(
-      key: 2,
-      active: false,
-      text: const Text('Solods', style: const TextStyle(color: Colors.black))),
-  ListCategories(
-      key: 3,
-      active: false,
-      text: const Text('Drinks', style: TextStyle(color: Colors.black))),
-  ListCategories(
-      key: 4,
-      active: false,
-      text: const Text('Snacks', style: const TextStyle(color: Colors.black))),
-];
-
 List listBanners = <ListBanners>[
   ListBanners(
       image: Image.asset('assets/images/banner1.jpg', fit: BoxFit.cover)),
@@ -322,13 +304,6 @@ class ListProducts {
   String listToDesc() {
     return ingridients.join(', ');
   }
-}
-
-class ListCategories {
-  final text;
-  final key;
-  final active;
-  ListCategories({required this.key, required this.active, required this.text});
 }
 
 class ListBanners {

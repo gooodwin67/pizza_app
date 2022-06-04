@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_app/constants.dart';
+import 'package:pizza_app/providers.dart';
+import 'package:provider/provider.dart';
 
 class CategoryTabsWidget extends StatefulWidget {
-  const CategoryTabsWidget(
-      {Key? key, required this.size, required this.listCategories})
-      : super(key: key);
-
   final Size size;
-  final List listCategories;
+  const CategoryTabsWidget({Key? key, required this.size}) : super(key: key);
 
   @override
   State<CategoryTabsWidget> createState() => _CategoryTabsWidgetState();
@@ -16,8 +14,12 @@ class CategoryTabsWidget extends StatefulWidget {
 class _CategoryTabsWidgetState extends State<CategoryTabsWidget> {
   @override
   Widget build(BuildContext context) {
+    List list = context.read<Categories>().listCategories;
     onTapCategory(key) {
-      print(key);
+      //print(list[key].active);
+      setState(() {
+        context.read<Categories>().setActive(key);
+      });
     }
 
     return Container(
@@ -25,7 +27,7 @@ class _CategoryTabsWidgetState extends State<CategoryTabsWidget> {
       height: widget.size.height * 0.05 + kDefaultPadding,
       child: ListView.separated(
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-          itemCount: widget.listCategories.length,
+          itemCount: list.length,
           scrollDirection: Axis.horizontal,
           separatorBuilder: (context, index) {
             return SizedBox(width: 10);
@@ -34,12 +36,10 @@ class _CategoryTabsWidgetState extends State<CategoryTabsWidget> {
             return Center(
               child: ElevatedButton(
                 onPressed: () {
-                  return onTapCategory(widget.listCategories[index].key);
+                  return onTapCategory(index);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: widget.listCategories[index].active
-                      ? kPrimaryColor
-                      : Colors.white,
+                  primary: list[index].active ? kPrimaryColor : Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -51,7 +51,7 @@ class _CategoryTabsWidgetState extends State<CategoryTabsWidget> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                child: widget.listCategories[index].text,
+                child: list[index].text,
               ),
             );
           }),
