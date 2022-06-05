@@ -5,7 +5,10 @@ import 'package:provider/provider.dart';
 
 class CategoryTabsWidget extends StatefulWidget {
   final Size size;
-  const CategoryTabsWidget({Key? key, required this.size}) : super(key: key);
+  final Function() notifyParent;
+  const CategoryTabsWidget(
+      {Key? key, required this.size, required this.notifyParent})
+      : super(key: key);
 
   @override
   State<CategoryTabsWidget> createState() => _CategoryTabsWidgetState();
@@ -17,6 +20,7 @@ class _CategoryTabsWidgetState extends State<CategoryTabsWidget> {
     List list = context.read<Categories>().listCategories;
     onTapCategory(key) {
       //print(list[key].active);
+      widget.notifyParent();
       setState(() {
         context.read<Categories>().setActive(key);
       });

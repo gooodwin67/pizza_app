@@ -37,6 +37,12 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    print('update main build');
+    refresh() {
+      setState(() {});
+    }
+
+    activeList = listProducts[context.read<Categories>().activeCategory[0]];
 
     getDescription(ingridients) {
       return ingridients.join(', ')[0].toUpperCase() +
@@ -63,6 +69,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
               backgroundColor: Colors.white,
               title: CategoryTabsWidget(
                 size: size,
+                notifyParent: refresh,
               ),
               floating: true,
               pinned: true,
@@ -134,13 +141,6 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                                           ),
                                         ),
                                       ),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            print(context
-                                                .read<Categories>()
-                                                .activeCategory[0]);
-                                          },
-                                          child: Text('press'))
                                     ],
                                   ),
                                 ),
@@ -184,6 +184,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
 }
 
 List listProducts = [
+  [],
   [
     ListProducts(
         image: 'assets/images/products/pepperoni.jpg',
@@ -276,7 +277,10 @@ List listProducts = [
           'нори'
         ],
         price: 32.00),
-  ]
+  ],
+  [],
+  [],
+  [],
 ];
 
 List listBanners = <ListBanners>[

@@ -31,13 +31,15 @@ class Categories with ChangeNotifier {
             const Text('Snacks', style: const TextStyle(color: Colors.black))),
   ];
   List get listCategories => _listCategories;
-  List _activeCategory = [0];
+  List _activeCategory = [1];
   List get activeCategory => _activeCategory;
 
   setActive(index) {
     listCategories.forEach((e) => e.active = false);
     listCategories[index].active = true;
-    activeCategory[0] = index;
+    index < listCategories.length - 2
+        ? activeCategory[0] = index
+        : activeCategory[0] = 0;
     notifyListeners();
   }
 }
