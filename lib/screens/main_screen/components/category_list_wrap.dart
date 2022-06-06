@@ -19,7 +19,6 @@ class _CategoryTabsWidgetState extends State<CategoryTabsWidget> {
   Widget build(BuildContext context) {
     List list = context.read<Categories>().listCategories;
     onTapCategory(key) {
-      //print(list[key].active);
       widget.notifyParent();
       setState(() {
         context.read<Categories>().setActive(key);
