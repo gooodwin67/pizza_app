@@ -19,6 +19,7 @@ class PizzaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Colors.white,
       debugShowCheckedModeBanner: false,
       //home: SplashScreenWidget(),
       home: MainScreenWidget(),

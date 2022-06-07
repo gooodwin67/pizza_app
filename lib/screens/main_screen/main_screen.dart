@@ -54,12 +54,6 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         .read<Categories>()
         .listProducts[context.read<Categories>().activeCategory[0]];
 
-    /*int aa = context
-        .read<Categories>()
-        .listProducts
-        .indexOf(context.read<Categories>().activeCategory[0]);
-    print(aa);
-*/
     getDescription(ingridients) {
       return ingridients.join(', ')[0].toUpperCase() +
           ingridients.join(', ').substring(1);
@@ -67,149 +61,161 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
 
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          controller: scrollController,
-          slivers: <Widget>[
-            SliverAppBar(
-              titleSpacing: 0,
-              backgroundColor: Colors.white,
-              title: Opacity(
-                opacity: newOpacity,
-                child: Banners_List_Wrap(size: size, listBanners: listBanners),
+        child: Container(
+          color: Colors.white,
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: <Widget>[
+              SliverAppBar(
+                titleSpacing: 0,
+                backgroundColor: Colors.white,
+                title: Opacity(
+                  opacity: newOpacity,
+                  child:
+                      Banners_List_Wrap(size: size, listBanners: listBanners),
+                ),
+                toolbarHeight: size.height * 0.20 + kDefaultPadding,
               ),
-              toolbarHeight: size.height * 0.20 + kDefaultPadding,
-            ),
-            SliverAppBar(
-              titleSpacing: 0,
-              toolbarHeight: size.height * 0.08 + kDefaultPadding,
-              backgroundColor: Colors.white,
-              title: CategoryTabsWidget(
-                size: size,
-                notifyParent: refresh,
+              SliverAppBar(
+                titleSpacing: 0,
+                toolbarHeight: size.height * 0.08 + kDefaultPadding,
+                backgroundColor: Colors.white,
+                title: CategoryTabsWidget(
+                  size: size,
+                  notifyParent: refresh,
+                ),
+                floating: true,
+                pinned: true,
               ),
-              floating: true,
-              pinned: true,
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          var a = context.read<Categories>().activeCategory[0];
-                          var b = index;
-                          context.read<Categories>().setActiveProd(a, b);
-                          print(context
-                              .read<Categories>()
-                              .listProducts[a][b]
-                              .active);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const DetailedProdScreen()),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: size.height * 0.20,
-                          margin: const EdgeInsets.only(
-                              left: kDefaultPadding / 2,
-                              right: kDefaultPadding / 2,
-                              bottom: kDefaultPadding / 2),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      const Color.fromARGB(255, 206, 206, 206)),
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  top: kDefaultPadding / 2,
-                                  bottom: kDefaultPadding / 2,
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            var a =
+                                context.read<Categories>().activeCategory[0];
+                            var b = index;
+                            context.read<Categories>().setActiveProd(a, b);
+                            // print(context
+                            //     .read<Categories>()
+                            //     .listProducts[a][b]
+                            //     .active);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DetailedProdScreen()),
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: size.height * 0.20,
+                            margin: const EdgeInsets.only(
+                                left: kDefaultPadding / 2,
+                                right: kDefaultPadding / 2,
+                                bottom: kDefaultPadding / 2),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: const Color.fromARGB(
+                                        255, 206, 206, 206)),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                    top: kDefaultPadding / 2,
+                                    bottom: kDefaultPadding / 2,
+                                  ),
+                                  width: 115,
+                                  height: 115,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(7),
+                                    child: Hero(
+                                      tag: activeList[index].key,
+                                      child: Image.asset(
+                                          activeList[index].image,
+                                          fit: BoxFit.contain),
+                                    ),
+                                  ),
                                 ),
-                                width: 115,
-                                height: 115,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(7),
-                                  child: Image.asset(activeList[index].image,
-                                      fit: BoxFit.contain),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: kDefaultPadding / 3,
-                                      vertical: kDefaultPadding / 1.5),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          activeList[index].name,
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(height: 3),
-                                        Expanded(
-                                          child: SingleChildScrollView(
-                                            child: Text(
-                                              getDescription(activeList[index]
-                                                  .ingridients),
-                                              maxLines: 4,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                color: Color(0xFF7C7C7C),
-                                                height: 1.3,
-                                                fontSize: 13,
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: kDefaultPadding / 3,
+                                        vertical: kDefaultPadding / 1.5),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            activeList[index].name,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          Expanded(
+                                            child: SingleChildScrollView(
+                                              child: Text(
+                                                context
+                                                    .read<Categories>()
+                                                    .getDescription(
+                                                        activeList[index]
+                                                            .ingridients),
+                                                maxLines: 4,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  color: Color(0xFF7C7C7C),
+                                                  height: 1.3,
+                                                  fontSize: 13,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: kPrimaryColor,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      bottomRight: Radius.circular(20),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      color: kPrimaryColor,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        bottomRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 13, vertical: 12),
+                                    child: Text(
+                                      activeList[index].price.toString(),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 13, vertical: 12),
-                                  child: Text(
-                                    activeList[index].price.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                    ],
-                  );
-                },
-                childCount: activeList.length,
+                        const SizedBox(height: 5),
+                      ],
+                    );
+                  },
+                  childCount: activeList.length,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

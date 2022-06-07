@@ -47,13 +47,17 @@ class Categories with ChangeNotifier {
     [],
     [
       ListProducts(
+          key: 1,
           active: false,
+          options1: ['Тонкая', 'Традиционная'],
           image: 'assets/images/products/pepperoni.jpg',
           name: 'Пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
           price: 399.00),
       ListProducts(
+          key: 2,
           active: false,
+          options1: ['Тонкая', 'Традиционная'],
           image: 'assets/images/products/foursesons.jpg',
           name: '4 Сезона',
           ingridients: [
@@ -68,19 +72,25 @@ class Categories with ChangeNotifier {
           ],
           price: 579.00),
       ListProducts(
+          key: 3,
           active: false,
+          options1: ['Тонкая', 'Традиционная'],
           image: 'assets/images/products/double_pepperoni.jpg',
           name: 'Двойная пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
           price: 639.00),
       ListProducts(
+          key: 4,
           active: false,
+          options1: ['Тонкая', 'Традиционная'],
           image: 'assets/images/products/gavai.jpg',
           name: 'Гавайская',
           ingridients: ['ветчина', 'ананасы', 'моцарелла', 'томатный соус'],
           price: 579.00),
       ListProducts(
+          key: 5,
           active: false,
+          options1: ['Тонкая', 'Традиционная'],
           image: 'assets/images/products/myasnaya.jpg',
           name: 'Мясная',
           ingridients: [
@@ -93,13 +103,17 @@ class Categories with ChangeNotifier {
           ],
           price: 429.00),
       ListProducts(
+          key: 6,
           active: false,
+          options1: ['Тонкая', 'Традиционная'],
           image: 'assets/images/products/double_pepperoni.jpg',
           name: 'Двойная пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
           price: 639.00),
       ListProducts(
+          key: 7,
           active: false,
+          options1: ['Тонкая', 'Традиционная'],
           image: 'assets/images/products/double_pepperoni.jpg',
           name: 'Двойная пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
@@ -107,7 +121,9 @@ class Categories with ChangeNotifier {
     ],
     [
       ListProducts(
+          key: 8,
           active: false,
+          options1: [],
           image: 'assets/images/products/kalif.jpg',
           name: 'Калифорния',
           ingridients: [
@@ -120,7 +136,9 @@ class Categories with ChangeNotifier {
           ],
           price: 29.00),
       ListProducts(
+          key: 9,
           active: false,
+          options1: [],
           image: 'assets/images/products/fil.jpg',
           name: 'Филадельфия Люкс',
           ingridients: [
@@ -133,7 +151,9 @@ class Categories with ChangeNotifier {
           ],
           price: 43.00),
       ListProducts(
+          key: 10,
           active: false,
+          options1: [],
           image: 'assets/images/products/bansay.jpg',
           name: 'Бансай',
           ingridients: [
@@ -146,7 +166,9 @@ class Categories with ChangeNotifier {
           ],
           price: 29.00),
       ListProducts(
+          key: 11,
           active: false,
+          options1: [],
           image: 'assets/images/products/alaska.jpg',
           name: 'Аляска',
           ingridients: [
@@ -169,13 +191,18 @@ class Categories with ChangeNotifier {
   }
 
   setActiveProd(a, b) {
-    // for (int i = 0; i < listProducts.length; i++) {
-    //   for (int j = 0; j < listProducts[i].length; j++) {
-    //     listProducts[i][j].active = false;
-    //   }
-    // }
-    // listProducts[a][b].active = true;
+    for (int i = 0; i < listProducts.length; i++) {
+      for (int j = 0; j < listProducts[i].length; j++) {
+        listProducts[i][j].active = false;
+      }
+    }
+    listProducts[a][b].active = true;
     notifyListeners();
+  }
+
+  getDescription(ingridients) {
+    return ingridients.join(', ')[0].toUpperCase() +
+        ingridients.join(', ').substring(1);
   }
 }
 
@@ -191,14 +218,18 @@ class ListCategories {
 }
 
 class ListProducts {
+  final int key;
   bool active;
+  final List options1;
   final String image;
   final String name;
   final List ingridients;
   final double price;
 
   ListProducts({
+    required this.key,
     required this.active,
+    required this.options1,
     required this.image,
     required this.name,
     required this.ingridients,
