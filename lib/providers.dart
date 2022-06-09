@@ -50,6 +50,9 @@ class Categories with ChangeNotifier {
           key: 1,
           active: false,
           options1: ['Тонкая', 'Традиционная'],
+          options1Active: 0,
+          options2: [21, 26, 31, 45],
+          options2Active: 0,
           image: 'assets/images/products/pepperoni.jpg',
           name: 'Пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
@@ -58,6 +61,9 @@ class Categories with ChangeNotifier {
           key: 2,
           active: false,
           options1: ['Тонкая', 'Традиционная'],
+          options1Active: 0,
+          options2: [21, 26, 31, 45],
+          options2Active: 0,
           image: 'assets/images/products/foursesons.jpg',
           name: '4 Сезона',
           ingridients: [
@@ -75,6 +81,9 @@ class Categories with ChangeNotifier {
           key: 3,
           active: false,
           options1: ['Тонкая', 'Традиционная'],
+          options1Active: 0,
+          options2: [21, 26, 31, 45],
+          options2Active: 0,
           image: 'assets/images/products/double_pepperoni.jpg',
           name: 'Двойная пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
@@ -83,6 +92,9 @@ class Categories with ChangeNotifier {
           key: 4,
           active: false,
           options1: ['Тонкая', 'Традиционная'],
+          options1Active: 0,
+          options2: [21, 26, 31, 45],
+          options2Active: 0,
           image: 'assets/images/products/gavai.jpg',
           name: 'Гавайская',
           ingridients: ['ветчина', 'ананасы', 'моцарелла', 'томатный соус'],
@@ -91,6 +103,9 @@ class Categories with ChangeNotifier {
           key: 5,
           active: false,
           options1: ['Тонкая', 'Традиционная'],
+          options1Active: 0,
+          options2: [21, 26, 31, 45],
+          options2Active: 0,
           image: 'assets/images/products/myasnaya.jpg',
           name: 'Мясная',
           ingridients: [
@@ -106,6 +121,9 @@ class Categories with ChangeNotifier {
           key: 6,
           active: false,
           options1: ['Тонкая', 'Традиционная'],
+          options1Active: 0,
+          options2: [21, 26, 31, 45],
+          options2Active: 0,
           image: 'assets/images/products/double_pepperoni.jpg',
           name: 'Двойная пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
@@ -114,6 +132,9 @@ class Categories with ChangeNotifier {
           key: 7,
           active: false,
           options1: ['Тонкая', 'Традиционная'],
+          options1Active: 0,
+          options2: [21, 26, 31, 45],
+          options2Active: 0,
           image: 'assets/images/products/double_pepperoni.jpg',
           name: 'Двойная пепперони',
           ingridients: ['пикантная пепперони', 'моцарелла', 'томатный соус'],
@@ -123,7 +144,6 @@ class Categories with ChangeNotifier {
       ListProducts(
           key: 8,
           active: false,
-          options1: [],
           image: 'assets/images/products/kalif.jpg',
           name: 'Калифорния',
           ingridients: [
@@ -138,7 +158,6 @@ class Categories with ChangeNotifier {
       ListProducts(
           key: 9,
           active: false,
-          options1: [],
           image: 'assets/images/products/fil.jpg',
           name: 'Филадельфия Люкс',
           ingridients: [
@@ -153,7 +172,6 @@ class Categories with ChangeNotifier {
       ListProducts(
           key: 10,
           active: false,
-          options1: [],
           image: 'assets/images/products/bansay.jpg',
           name: 'Бансай',
           ingridients: [
@@ -168,7 +186,6 @@ class Categories with ChangeNotifier {
       ListProducts(
           key: 11,
           active: false,
-          options1: [],
           image: 'assets/images/products/alaska.jpg',
           name: 'Аляска',
           ingridients: [
@@ -204,6 +221,28 @@ class Categories with ChangeNotifier {
     return ingridients.join(', ')[0].toUpperCase() +
         ingridients.join(', ').substring(1);
   }
+
+  setActiveOptions(product, index) {
+    for (int i = 0; i < listProducts.length; i++) {
+      for (int j = 0; j < listProducts[i].length; j++) {
+        if (product.key == listProducts[i][j].key) {
+          listProducts[i][j].options1Active = index;
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  setActiveOptions2(product, index) {
+    for (int i = 0; i < listProducts.length; i++) {
+      for (int j = 0; j < listProducts[i].length; j++) {
+        if (product.key == listProducts[i][j].key) {
+          listProducts[i][j].options2Active = index;
+        }
+      }
+    }
+    notifyListeners();
+  }
 }
 
 class ListCategories {
@@ -220,7 +259,10 @@ class ListCategories {
 class ListProducts {
   final int key;
   bool active;
-  final List options1;
+  List options1;
+  int options1Active;
+  List options2;
+  int options2Active;
   final String image;
   final String name;
   final List ingridients;
@@ -229,7 +271,10 @@ class ListProducts {
   ListProducts({
     required this.key,
     required this.active,
-    required this.options1,
+    this.options1 = const [],
+    this.options1Active = 0,
+    this.options2 = const [],
+    this.options2Active = 0,
     required this.image,
     required this.name,
     required this.ingridients,
