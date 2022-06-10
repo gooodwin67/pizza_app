@@ -202,6 +202,9 @@ class Categories with ChangeNotifier {
     [],
     [],
   ];
+
+  List listInCart = [];
+
   List get listProducts => _listProducts;
   String listToDesc(ingridients) {
     return ingridients.join(', ');
@@ -243,6 +246,11 @@ class Categories with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  addToCart(name) {
+    listInCart.add(ProdInCart(name: name));
+    notifyListeners();
+  }
 }
 
 class ListCategories {
@@ -280,4 +288,10 @@ class ListProducts {
     required this.ingridients,
     required this.price,
   });
+}
+
+class ProdInCart {
+  late String name;
+
+  ProdInCart({required this.name});
 }

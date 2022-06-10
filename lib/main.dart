@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_app/providers.dart';
+import 'package:pizza_app/screens/cart_screen/cart_wrap.dart';
+import 'package:pizza_app/screens/detailed_screen/detailed_prod.dart';
 import 'package:pizza_app/screens/main_screen/main_screen.dart';
 import 'package:pizza_app/screens/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,7 @@ class PizzaApp extends StatelessWidget {
     return MaterialApp(
       color: Colors.white,
       debugShowCheckedModeBanner: false,
+
       //home: SplashScreenWidget(),
       home: MainScreenWidget(),
     );

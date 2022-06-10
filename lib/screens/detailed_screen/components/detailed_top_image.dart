@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:pizza_app/constants.dart';
 import 'package:pizza_app/providers.dart';
@@ -9,8 +11,10 @@ class DetailedProdImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding),
+      padding: const EdgeInsets.only(
+          top: kDefaultPadding, left: kDefaultPadding, right: kDefaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +44,7 @@ class DetailedProdImage extends StatelessWidget {
           Expanded(
             child: Hero(
               tag: product.key,
-              child: Image.asset(product.image),
+              child: Image.asset(product.image, height: size.height * 0.4),
             ),
           ),
           SizedBox(width: 10),
@@ -57,10 +61,15 @@ class DetailedProdImage extends StatelessWidget {
                 ),
               ],
             ),
-            child: IconButton(
-              splashRadius: 28,
-              onPressed: () {},
-              icon: Icon(Icons.shopping_cart),
+            child: Stack(
+              children: [
+                IconButton(
+                  splashRadius: 28,
+                  onPressed: () {},
+                  icon: Icon(Icons.shopping_cart),
+                ),
+                Text(context.read<Categories>().listInCart.length.toString()),
+              ],
             ),
           ),
         ],

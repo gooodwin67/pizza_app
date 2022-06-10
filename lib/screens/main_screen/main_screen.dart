@@ -60,6 +60,13 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
     }
 
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: 'Cart'),
+        ],
+      ),
       body: SafeArea(
         child: Container(
           color: Colors.white,
@@ -99,10 +106,6 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                                 context.read<Categories>().activeCategory[0];
                             var b = index;
                             context.read<Categories>().setActiveProd(a, b);
-                            // print(context
-                            //     .read<Categories>()
-                            //     .listProducts[a][b]
-                            //     .active);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
