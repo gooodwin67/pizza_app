@@ -1,14 +1,17 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:pizza_app/constants.dart';
 import 'package:pizza_app/providers.dart';
 import 'package:provider/provider.dart';
 
-class DetailedProdImage extends StatelessWidget {
+class DetailedProdImage extends StatefulWidget {
   final product;
   const DetailedProdImage({Key? key, required this.product}) : super(key: key);
 
+  @override
+  State<DetailedProdImage> createState() => _DetailedProdImageState();
+}
+
+class _DetailedProdImageState extends State<DetailedProdImage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -43,8 +46,9 @@ class DetailedProdImage extends StatelessWidget {
           SizedBox(width: 10),
           Expanded(
             child: Hero(
-              tag: product.key,
-              child: Image.asset(product.image, height: size.height * 0.4),
+              tag: widget.product.key,
+              child:
+                  Image.asset(widget.product.image, height: size.height * 0.4),
             ),
           ),
           SizedBox(width: 10),
@@ -65,7 +69,12 @@ class DetailedProdImage extends StatelessWidget {
               children: [
                 IconButton(
                   splashRadius: 28,
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      context.read<Categories>().setActivePage(1);
+                      Navigator.pop(context);
+                    });
+                  },
                   icon: Icon(Icons.shopping_cart),
                 ),
                 Text(context.read<Categories>().listInCart.length.toString()),

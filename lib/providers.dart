@@ -203,6 +203,8 @@ class Categories with ChangeNotifier {
     [],
   ];
 
+  int activePage = 0;
+
   List listInCart = [];
 
   List get listProducts => _listProducts;
@@ -247,8 +249,22 @@ class Categories with ChangeNotifier {
     notifyListeners();
   }
 
-  addToCart(name) {
-    listInCart.add(ProdInCart(name: name));
+  addToCart(name, image, ingridient, price) {
+    listInCart.add(ProdInCart(
+        name: name, image: image, ingridients: ingridient, price: price));
+    notifyListeners();
+  }
+
+  orderPrice() {
+    double sum = 0;
+    listInCart.forEach((element) {
+      sum = sum + element.price;
+    });
+    return sum;
+  }
+
+  setActivePage(page) {
+    activePage = page;
     notifyListeners();
   }
 }
@@ -292,6 +308,14 @@ class ListProducts {
 
 class ProdInCart {
   late String name;
+  final String image;
+  final List ingridients;
+  final double price;
 
-  ProdInCart({required this.name});
+  ProdInCart({
+    required this.image,
+    required this.name,
+    required this.ingridients,
+    required this.price,
+  });
 }

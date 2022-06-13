@@ -27,7 +27,11 @@ class _DetailedProdAddToCartState extends State<DetailedProdAddToCart> {
         child: ElevatedButton(
           onPressed: () {
             setState(() {
-              context.read<Categories>().addToCart(widget.product.name);
+              context.read<Categories>().addToCart(
+                  widget.product.name,
+                  widget.product.image,
+                  widget.product.ingridients,
+                  widget.product.price);
               widget.refresh();
             });
           },
