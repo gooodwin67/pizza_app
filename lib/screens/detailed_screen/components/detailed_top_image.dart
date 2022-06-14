@@ -65,20 +65,49 @@ class _DetailedProdImageState extends State<DetailedProdImage> {
                 ),
               ],
             ),
-            child: Stack(
-              children: [
-                IconButton(
-                  splashRadius: 28,
-                  onPressed: () {
-                    setState(() {
-                      context.read<Categories>().setActivePage(1);
-                      Navigator.pop(context);
-                    });
-                  },
-                  icon: Icon(Icons.shopping_cart),
-                ),
-                Text(context.read<Categories>().listInCart.length.toString()),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  context.read<Categories>().setActivePage(1);
+                  Navigator.pop(context);
+                });
+              },
+              child: Stack(
+                children: [
+                  IconButton(
+                    splashRadius: 28,
+                    onPressed: () {
+                      setState(() {
+                        context.read<Categories>().setActivePage(1);
+                        Navigator.pop(context);
+                      });
+                    },
+                    icon: Icon(Icons.shopping_cart),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: kPrimaryColor.withOpacity(0.7),
+                      ),
+                      child: Center(
+                        child: Text(
+                            context
+                                .read<Categories>()
+                                .listInCart
+                                .length
+                                .toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

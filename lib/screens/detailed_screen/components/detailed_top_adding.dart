@@ -12,7 +12,7 @@ class DetailedProdAdding extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
       child: Container(
-        height: 120,
+        height: 0,
         color: Color.fromARGB(255, 196, 196, 196),
       ),
     );

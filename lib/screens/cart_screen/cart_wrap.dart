@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pizza_app/constants.dart';
 import 'package:pizza_app/providers.dart';
+import 'package:pizza_app/screens/detailed_screen/detailed_prod.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
@@ -66,18 +67,23 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-class BlockInCart extends StatelessWidget {
+class BlockInCart extends StatefulWidget {
   final int index;
   final Size size;
   const BlockInCart({Key? key, required this.size, required this.index})
       : super(key: key);
 
   @override
+  State<BlockInCart> createState() => _BlockInCartState();
+}
+
+class _BlockInCartState extends State<BlockInCart> {
+  @override
   Widget build(BuildContext context) {
     var product = context.read<Categories>().listInCart;
     return Container(
       width: double.infinity,
-      height: size.height * 0.20,
+      height: widget.size.height * 0.20,
       margin: const EdgeInsets.only(
           left: kDefaultPadding / 2,
           right: kDefaultPadding / 2,
@@ -97,7 +103,8 @@ class BlockInCart extends StatelessWidget {
             height: 115,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(7),
-              child: Image.asset(product[index].image, fit: BoxFit.contain),
+              child:
+                  Image.asset(product[widget.index].image, fit: BoxFit.contain),
             ),
           ),
           Expanded(
@@ -111,7 +118,7 @@ class BlockInCart extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product[index].name,
+                      product[widget.index].name,
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -119,9 +126,8 @@ class BlockInCart extends StatelessWidget {
                     Expanded(
                       child: SingleChildScrollView(
                         child: Text(
-                          context
-                              .read<Categories>()
-                              .getDescription(product[index].ingridients),
+                          context.read<Categories>().getDescription(
+                              product[widget.index].ingridients),
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -149,7 +155,7 @@ class BlockInCart extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
               child: Text(
-                product[index].price.toString(),
+                product[widget.index].price.toString(),
                 style: const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),

@@ -76,16 +76,15 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                   controller: scrollController,
                   slivers: <Widget>[
                     SliverAppBar(
+                      leadingWidth: 0,
                       titleSpacing: 0,
                       backgroundColor: Colors.white,
-                      title: Opacity(
-                        opacity: newOpacity,
-                        child: Banners_List_Wrap(
-                            size: size, listBanners: listBanners),
-                      ),
+                      title: Banners_List_Wrap(
+                          size: size, listBanners: listBanners),
                       toolbarHeight: size.height * 0.20 + kDefaultPadding,
                     ),
                     SliverAppBar(
+                      leadingWidth: 0,
                       titleSpacing: 0,
                       toolbarHeight: size.height * 0.08 + kDefaultPadding,
                       backgroundColor: Colors.white,

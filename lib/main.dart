@@ -24,8 +24,8 @@ class PizzaApp extends StatelessWidget {
       color: Colors.white,
       debugShowCheckedModeBanner: false,
 
-      //home: SplashScreenWidget(),
-      home: MainScreenWidget(),
+      home: SplashScreenWidget(),
+      //home: MainScreenWidget(),
     );
   }
 }
